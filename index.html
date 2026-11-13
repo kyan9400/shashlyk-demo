@@ -172,8 +172,8 @@
   .when button.on { background: var(--ink); color: var(--bg); }
   .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .5); z-index: 55; opacity: 0; pointer-events: none; transition: .3s; }
   .scrim.on { opacity: 1; pointer-events: auto; }
-  .floatcart { position: fixed; left: 50%; bottom: 70px; transform: translate(-50%, 140%); z-index: 45; transition: transform .4s cubic-bezier(.2, .9, .3, 1.2); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .6); }
-  .floatcart.show { transform: translate(-50%, 0); }
+  .floatcart { position: fixed; left: 50%; bottom: 70px; transform: translate(-50%, 300%); visibility: hidden; z-index: 45; transition: transform .4s cubic-bezier(.2, .9, .3, 1.2); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .6); }
+  .floatcart.show { transform: translate(-50%, 0); visibility: visible; }
 
   .demo { position: fixed; right: 12px; bottom: 12px; z-index: 50; max-width: 300px; background: rgba(28, 19, 14, .95); border: 1px solid var(--line); border-radius: 14px; padding: 10px 13px; font-size: 12px; color: var(--muted); }
   .demo b { color: var(--ember); }
@@ -460,7 +460,7 @@ $("#grill").onclick = () => {
   if (turns === 3) $(".grill-hint").textContent = "Готово! Осталось заказать 🔥";
   else $(".grill-hint").textContent = turns === 1 ? "Ещё разок…" : "Почти готово…";
 };
-$("#coals").innerHTML = Array.from({ length: 22 }, (_, i) => `<circle class="coal" cx="${84 + (i % 11) * 31}" cy="${290 + Math.floor(i / 11) * 22}" r="${13 + (i * 7) % 6}" fill="url(#coalG)" style="animation-delay:${(i * 0.37) % 2.4}s"/>`).join("");
+$("#coals").innerHTML = Array.from({ length: 60 }, (_, i) => { const r = (n) => ((Math.sin(i * 12.9898 + n) * 43758.5453) % 1 + 1) % 1; const hot = r(3) > .35; return `<circle class="${hot ? "coal" : ""}" cx="${78 + r(1) * 324}" cy="${284 + r(2) * 60}" r="${7 + r(4) * 11}" fill="${hot ? "url(#coalG)" : "#2b1a12"}" style="animation-delay:${(r(5) * 2.4).toFixed(2)}s"/>`; }).join("");
 
 /* ---- sparks ---- */
 const cv = $("#sparks"), cx = cv.getContext("2d");
