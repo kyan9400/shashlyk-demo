@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Шашлык и Еда — шашлык на углях в Судаково (демо)</title>
+<meta name="description" content="Демо-концепт сайта кафе «Шашлык и Еда»: меню с ценами, заказ навынос и банкеты через WhatsApp.">
+<meta name="theme-color" content="#120c09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #120c09;
+    --bg-2: #1c130e;
+    --card: #221710;
+    --ink: #fbefe2;
+    --muted: #b9a593;
+    --line: rgba(251, 239, 226, .1);
+    --fire: #ff6a1f;
+    --ember: #ffb347;
+    --red: #d8321f;
+    --wa: #25d366;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.6 Manrope, system-ui, sans-serif; overflow-x: hidden; }
+  h1, h2, h3 { font-family: Unbounded, sans-serif; line-height: 1.05; letter-spacing: -.01em; }
+  a { color: inherit; }
+  button { font: inherit; cursor: pointer; color: inherit; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  .fire { color: var(--fire); }
+  .kicker { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 800; color: var(--ember); }
+
+  nav { position: fixed; inset: 0 0 auto; z-index: 40; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+  nav.solid { background: rgba(18, 12, 9, .88); backdrop-filter: blur(12px); border-color: var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 68px; }
+  .logo { font-family: Unbounded, sans-serif; font-weight: 900; font-size: 17px; text-decoration: none; letter-spacing: -.02em; }
+  .logo span { color: var(--fire); }
+  nav ul { display: flex; gap: 26px; list-style: none; font-size: 14px; font-weight: 700; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--ink); }
+  .cartbtn { border: 1px solid var(--line); background: rgba(255, 255, 255, .04); border-radius: 999px; padding: 10px 16px; font-weight: 800; font-size: 14px; display: flex; gap: 8px; align-items: center; }
+  .cartbtn i { font-style: normal; background: var(--fire); color: #1a0d05; border-radius: 999px; min-width: 22px; height: 22px; display: grid; place-items: center; font-size: 12px; padding: 0 6px; }
+  .bump { animation: bump .45s; }
+  @keyframes bump { 40% { transform: scale(1.14); } }
+
+  /* hero */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 100px 0 60px; }
+  #sparks { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .glow { position: absolute; left: 50%; bottom: -30%; width: 140vw; height: 80vh; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(255, 106, 31, .45), rgba(216, 50, 31, .15) 55%, transparent); filter: blur(10px); animation: breathe 4s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: .75; } }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; }
+  .hero h1 { font-size: clamp(2.4rem, 6.4vw, 5.2rem); font-weight: 900; margin: 16px 0 18px; }
+  .hero h1 em { font-style: normal; color: transparent; background: linear-gradient(90deg, var(--ember), var(--fire), var(--red)); -webkit-background-clip: text; background-clip: text; }
+  .hero p.lead { color: var(--muted); font-size: 1.1rem; max-width: 520px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
+  .badge { border: 1px solid var(--line); background: rgba(255, 255, 255, .04); border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; }
+  .badge b { color: var(--ember); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; border-radius: 16px; padding: 15px 22px; font-weight: 800; font-size: 15px; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.hot { background: linear-gradient(135deg, var(--ember), var(--fire)); color: #1a0d05; box-shadow: 0 18px 40px -16px var(--fire); }
+  .btn.wa { background: var(--wa); color: #06210f; }
+  .btn.ghost { border: 1px solid var(--line); background: rgba(255, 255, 255, .04); }
+
+  /* the skewer */
+  .grill { position: relative; aspect-ratio: 1; max-width: 480px; width: 100%; margin-left: auto; }
+  .grill svg { width: 100%; height: 100%; overflow: visible; }
+  .skewer { transform-origin: 240px 200px; animation: turn 3.2s ease-in-out infinite; }
+  @keyframes turn { 50% { transform: translateY(-6px) rotate(-2deg); } }
+  .chunk { transition: fill 1.2s; }
+  .coal { animation: coal 2.4s ease-in-out infinite; }
+  @keyframes coal { 50% { opacity: .55; } }
+  .smoke { animation: smoke 5s linear infinite; opacity: 0; }
+  @keyframes smoke { 0% { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: .35; } 100% { opacity: 0; transform: translateY(-160px) scale(1.6); } }
+  .grill-hint { text-align: center; font-size: 13px; color: var(--muted); margin-top: -10px; }
+
+  /* road strip */
+  .road { background: var(--fire); color: #1a0d05; overflow: hidden; padding: 14px 0; transform: rotate(-1.5deg); margin: -20px -10px 0; position: relative; z-index: 2; }
+  .road .track { display: flex; gap: 40px; width: max-content; animation: run 30s linear infinite; font-family: Unbounded, sans-serif; font-weight: 900; font-size: 20px; white-space: nowrap; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  section { padding: 100px 0; }
+  .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 34px; }
+  .head h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 900; margin-top: 10px; }
+  .head p { color: var(--muted); max-width: 420px; }
+
+  /* chef */
+  .chef { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .chef-card { background: linear-gradient(160deg, #2b1a10, #170f0b); border: 1px solid var(--line); border-radius: 30px; padding: 36px; position: relative; overflow: hidden; }
+  .chef-card .big { font-family: "Rubik Mono One", sans-serif; font-size: clamp(3rem, 9vw, 6.4rem); line-height: .9; color: rgba(255, 106, 31, .12); position: absolute; right: -10px; bottom: -14px; }
+  .chef-card h3 { font-size: 1.9rem; margin: 12px 0; }
+  .chef-card p { color: var(--muted); position: relative; }
+  .chef-card blockquote { margin-top: 20px; font-size: 1.15rem; border-left: 3px solid var(--fire); padding-left: 16px; position: relative; }
+  .chef-card blockquote small { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; }
+  .stat b { font-family: Unbounded, sans-serif; font-size: 2.2rem; color: var(--ember); display: block; line-height: 1; }
+  .stat span { color: var(--muted); font-size: 14px; }
+
+  /* menu */
+  .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 22px; scrollbar-width: none; }
+  .tabs button { flex: none; border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 10px 16px; font-weight: 800; font-size: 14px; color: var(--muted); }
+  .tabs button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dish { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 16px 16px 16px 20px; transition: border-color .2s, transform .2s; animation: pop .4s both; }
+  .dish:hover { border-color: rgba(255, 106, 31, .5); transform: translateY(-2px); }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } }
+  .dish .t { flex: 1; min-width: 0; }
+  .dish b { display: block; font-weight: 800; }
+  .dish small { color: var(--muted); font-size: 13px; }
+  .dish .pre { color: var(--ember); font-weight: 700; }
+  .dish .p { font-family: Unbounded, sans-serif; font-weight: 700; white-space: nowrap; }
+  .add { flex: none; width: 42px; height: 42px; border-radius: 14px; border: 0; background: var(--fire); color: #1a0d05; font-size: 24px; font-weight: 800; line-height: 1; display: grid; place-items: center; transition: transform .15s; }
+  .add:active { transform: scale(.9); }
+  .qty { flex: none; display: flex; align-items: center; gap: 8px; background: rgba(255, 106, 31, .14); border-radius: 14px; padding: 4px; }
+  .qty button { width: 34px; height: 34px; border: 0; border-radius: 10px; background: var(--fire); color: #1a0d05; font-weight: 900; font-size: 18px; }
+  .qty span { min-width: 18px; text-align: center; font-weight: 800; }
+
+  /* banquet */
+  .banquet { background: radial-gradient(120% 120% at 100% 0%, rgba(255, 106, 31, .25), transparent 55%), var(--bg-2); border: 1px solid var(--line); border-radius: 34px; padding: clamp(24px, 5vw, 54px); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .banquet h2 { font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 900; margin: 10px 0 14px; }
+  .banquet p { color: var(--muted); }
+  .banquet .from { margin-top: 22px; font-family: Unbounded, sans-serif; font-size: 1.4rem; }
+  .banquet .from b { color: var(--ember); }
+  .form { display: grid; gap: 18px; }
+  .form label { font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { border: 1px solid var(--line); background: rgba(255, 255, 255, .03); border-radius: 12px; padding: 9px 13px; font-weight: 700; font-size: 14px; }
+  .chips button.on { background: var(--fire); color: #1a0d05; border-color: var(--fire); }
+  .guests { display: flex; align-items: center; gap: 16px; }
+  .guests output { font-family: Unbounded, sans-serif; font-size: 2.2rem; font-weight: 900; color: var(--ember); min-width: 70px; }
+  input[type=range] { flex: 1; accent-color: var(--fire); height: 6px; }
+  input[type=date] { width: 100%; background: rgba(255, 255, 255, .05); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--ink); font: 600 15px Manrope, sans-serif; color-scheme: dark; }
+
+  /* reviews */
+  .revs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .rv { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 26px; }
+  .rv .s { color: var(--ember); letter-spacing: 3px; }
+  .rv p { margin: 12px 0 14px; font-size: 1.05rem; }
+  .rv small { color: var(--muted); }
+
+  /* visit */
+  .visit { display: grid; grid-template-columns: .9fr 1.1fr; gap: 20px; }
+  .info { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .info h3 { font-size: 1.7rem; }
+  .info .row { display: flex; gap: 12px; color: var(--muted); }
+  .info .row b { color: var(--ink); display: block; }
+  .feat { display: flex; flex-wrap: wrap; gap: 6px; }
+  .feat span { font-size: 12.5px; font-weight: 700; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; color: var(--muted); }
+  .map { border-radius: 28px; overflow: hidden; border: 1px solid var(--line); min-height: 380px; filter: grayscale(.3) contrast(1.05); }
+  .map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0 130px; color: var(--muted); font-size: 13px; text-align: center; }
+
+  /* cart */
+  .drawer { position: fixed; inset: 0 0 0 auto; width: min(430px, 100%); background: var(--bg-2); z-index: 60; transform: translateX(105%); transition: transform .4s cubic-bezier(.2, .9, .3, 1); display: flex; flex-direction: column; border-left: 1px solid var(--line); }
+  .drawer.open { transform: none; }
+  .drawer header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid var(--line); }
+  .drawer h3 { font-size: 1.4rem; }
+  .x { border: 0; background: transparent; font-size: 30px; line-height: 1; }
+  .items { flex: 1; overflow: auto; padding: 8px 24px; }
+  .it { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .it .t { flex: 1; } .it small { color: var(--muted); display: block; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .dfoot { padding: 18px 24px 24px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
+  .sum { display: flex; justify-content: space-between; font-family: Unbounded, sans-serif; font-size: 1.3rem; }
+  .when { display: flex; gap: 6px; flex-wrap: wrap; }
+  .when button { flex: 1; border: 1px solid var(--line); background: transparent; border-radius: 12px; padding: 9px 8px; font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .when button.on { background: var(--ink); color: var(--bg); }
+  .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .5); z-index: 55; opacity: 0; pointer-events: none; transition: .3s; }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .floatcart { position: fixed; left: 50%; bottom: 70px; transform: translate(-50%, 140%); z-index: 45; transition: transform .4s cubic-bezier(.2, .9, .3, 1.2); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .6); }
+  .floatcart.show { transform: translate(-50%, 0); }
+
+  .demo { position: fixed; right: 12px; bottom: 12px; z-index: 50; max-width: 300px; background: rgba(28, 19, 14, .95); border: 1px solid var(--line); border-radius: 14px; padding: 10px 13px; font-size: 12px; color: var(--muted); }
+  .demo b { color: var(--ember); }
+
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s, transform .8s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero-grid, .chef, .banquet, .visit { grid-template-columns: 1fr; }
+    .grill { max-width: 340px; margin: 0 auto; order: -1; }
+    .hero { padding-top: 80px; }
+    .menu, .revs { grid-template-columns: 1fr; }
+    .demo { left: 12px; right: 12px; max-width: none; bottom: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">ШАШЛЫК <span>&</span> ЕДА</a>
+    <ul>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#banquet">Банкеты</a></li>
+      <li><a href="#chef">О нас</a></li>
+      <li><a href="#visit">Как добраться</a></li>
+    </ul>
+    <button class="cartbtn" id="openCart">Заказ <i id="count">0</i></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="sparks" aria-hidden="true"></canvas>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">Судаково · по дороге в Домодедово</p>
+      <h1>Шашлык <em>на живых углях</em></h1>
+      <p class="lead">Азербайджанская кухня от шефа Микаила: всё готовится здесь, вплоть до лаваша. Закажите заранее и заберите горячим по пути.</p>
+      <div class="badges">
+        <span class="badge"><b>★ 5,0</b> · 354 оценки на Яндексе</span>
+        <span class="badge">Халяль</span>
+        <span class="badge">Бесплатная парковка</span>
+        <span class="badge">Банкетный зал</span>
+      </div>
+      <div class="ctas">
+        <a class="btn hot" href="#menu">Собрать заказ</a>
+        <a class="btn ghost" href="#banquet">Заказать банкет</a>
+      </div>
+    </div>
+    <div>
+      <div class="grill" id="grill" title="Нажмите, чтобы перевернуть шампур">
+        <svg viewBox="0 0 480 440" aria-hidden="true">
+          <defs>
+            <radialGradient id="coalG"><stop offset="0" stop-color="#ffd27a"/><stop offset=".45" stop-color="#ff6a1f"/><stop offset="1" stop-color="#5a1206"/></radialGradient>
+            <linearGradient id="steel" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f1f1f1"/><stop offset="1" stop-color="#7d7d7d"/></linearGradient>
+            <linearGradient id="mangal" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a2a22"/><stop offset="1" stop-color="#140c08"/></linearGradient>
+          </defs>
+          <g class="smoke"><circle cx="200" cy="170" r="30" fill="#fff" opacity=".08"/></g>
+          <g class="smoke" style="animation-delay:1.6s"><circle cx="270" cy="170" r="36" fill="#fff" opacity=".07"/></g>
+          <g class="smoke" style="animation-delay:3.2s"><circle cx="235" cy="160" r="26" fill="#fff" opacity=".09"/></g>
+          <g class="skewer" id="skewer">
+            <rect x="30" y="196" width="420" height="8" rx="4" fill="url(#steel)"/>
+            <path d="M30 192 q-26 8 0 16 z" fill="#c9c9c9"/>
+            <circle cx="22" cy="200" r="10" fill="none" stroke="#c9c9c9" stroke-width="6"/>
+            <g id="chunks"></g>
+          </g>
+          <rect x="60" y="270" width="360" height="90" rx="12" fill="url(#mangal)" stroke="#4d372b"/>
+          <g id="coals"></g>
+          <rect x="60" y="270" width="360" height="12" rx="6" fill="#4d372b"/>
+          <rect x="90" y="360" width="10" height="70" fill="#2a1d16"/><rect x="380" y="360" width="10" height="70" fill="#2a1d16"/>
+        </svg>
+      </div>
+      <p class="grill-hint">Нажмите на шампур, чтобы его перевернуть</p>
+    </div>
+  </div>
+</header>
+
+<div class="road" aria-hidden="true"><div class="track" id="road"></div></div>
+
+<section id="chef">
+  <div class="wrap chef">
+    <div class="chef-card reveal">
+      <p class="kicker">Шеф и владелец</p>
+      <h3>Микаил готовит сам</h3>
+      <p>Маринад на травах и специях, мясо на углях, лаваш на садже, лепёшки из тандыра, домашняя пахлава и эклеры. Гостей здесь встречают как дома.</p>
+      <blockquote>«Вся еда, вплоть до лаваша, делается поваром, по совместительству владельцем, Микаилом.»<small>Эльвира М. · отзыв на Яндекс Картах</small></blockquote>
+      <div class="big">MIKAIL</div>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><b>5,0</b><span>рейтинг на Яндекс Картах, 354 оценки</span></div>
+      <div class="stat reveal"><b>215</b><span>отзывов от гостей</span></div>
+      <div class="stat reveal"><b>~550 ₽</b><span>средний чек</span></div>
+      <div class="stat reveal"><b>800 ₽</b><span>бизнес-ланч</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" style="padding-top:20px">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><p class="kicker">Меню · цены с Яндекс Карт</p><h2>Соберите <span class="fire">заказ</span></h2></div>
+      <p>Добавьте блюда, выберите, когда заберёте, и отправьте заказ в WhatsApp одним нажатием.</p>
+    </div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="menu" id="menuList"></div>
+  </div>
+</section>
+
+<section id="banquet">
+  <div class="wrap">
+    <div class="banquet reveal">
+      <div>
+        <p class="kicker">Банкетный зал</p>
+        <h2>Праздник <span class="fire">с шашлыком</span></h2>
+        <p>Дни рождения, свадьбы, встречи друзей и корпоративы. Плов в казане, шашлык ассорти, долма и пахлава — меню подберём под ваш праздник.</p>
+        <div class="from">Банкет от <b>5 000 ₽</b></div>
+      </div>
+      <div class="form">
+        <div><label>Повод</label><div class="chips" id="occasion"></div></div>
+        <div><label for="guests">Гостей</label><div class="guests"><output id="gOut">20</output><input type="range" id="guests" min="5" max="60" value="20"></div></div>
+        <div><label for="date">Дата</label><input type="date" id="date"></div>
+        <a class="btn wa" id="bqSend" target="_blank" rel="noopener" href="#">Отправить заявку в WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal"><div><p class="kicker">Отзывы</p><h2>Заехали один раз — <span class="fire">теперь всегда</span></h2></div></div>
+    <div class="revs">
+      <div class="rv reveal"><div class="s">★★★★★</div><p>«Проезжали мимо и решили заехать. Дорожный перекус принёс эмоции как поход в крутейший ресторан.»</p><small>Олег К. · Яндекс Карты</small></div>
+      <div class="rv reveal"><div class="s">★★★★★</div><p>«По пути в аэропорт захотели перекусить. Шеф Микаил — душевный мужчина, встретил радушно.»</p><small>Ирина · Яндекс Карты</small></div>
+      <div class="rv reveal"><div class="s">★★★★★</div><p>«Если меня спросят, где самый вкусный шашлык, я скажу, что только здесь. Внутри очень уютно.»</p><small>Берта К. · Яндекс Карты</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit" style="padding-top:0">
+  <div class="wrap visit">
+    <div class="info reveal">
+      <p class="kicker">Как добраться</p>
+      <h3>д. Судаково, 180</h3>
+      <div class="row"><span>📍</span><div><b>Городской округ Домодедово</b>Удобно остановиться по дороге в аэропорт</div></div>
+      <div class="row"><span>🕘</span><div><b>Открыто до 21:00</b>Предзаказ и самовывоз через WhatsApp</div></div>
+      <div class="feat"><span>Халяль</span><span>Парковка</span><span>Завтраки</span><span>Бизнес-ланч</span><span>Детское меню</span><span>Wi-Fi</span><span>Оплата картой и QR</span><span>Можно с собакой</span></div>
+      <div class="ctas"><a class="btn wa" data-wa="Здравствуйте! Хочу заказать шашлык навынос." href="#">Написать в WhatsApp</a><a class="btn ghost" href="tel:+79853564343">Позвонить</a></div>
+    </div>
+    <div class="map reveal"><iframe title="Карта" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=37.744666%2C55.354696&z=15&pt=37.744666%2C55.354696%2Cpm2rdm"></iframe></div>
+  </div>
+</section>
+
+<footer><div class="wrap">© Шашлык и Еда · д. Судаково, 180 · +7 985 356-43-43<br>Цены взяты с Яндекс Карт и могут отличаться.</div></footer>
+
+<button class="btn hot floatcart" id="floatCart">Заказ · <span id="floatSum">0 ₽</span></button>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Ваш заказ">
+  <header><h3>Ваш заказ</h3><button class="x" id="closeCart" aria-label="Закрыть">×</button></header>
+  <div class="items" id="items"></div>
+  <div class="dfoot">
+    <div class="when" id="when"></div>
+    <div class="sum"><span>Итого</span><span id="sum">0 ₽</span></div>
+    <a class="btn wa" id="sendOrder" target="_blank" rel="noopener" href="#">Отправить заказ в WhatsApp</a>
+  </div>
+</aside>
+
+<div class="demo"><b>Демо-концепт</b> от Альхассана Альфаррана: пример сайта для «Шашлык и Еда», не официальный сайт кафе.</div>
+
+<script>
+const WA = "79853564343";
+const wa = (t) => "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
+const $ = (s) => document.querySelector(s);
+const rub = (n) => n.toLocaleString("ru-RU") + " ₽";
+
+/* ---- real menu from their Yandex card ---- */
+const MENU = {
+  "Шашлык": [
+    ["Шашлык из баранины", "400 г", 1100], ["Шашлык из корейки баранины", "", 1100], ["Шашлык из телячьей вырезки", "300 г", 1200],
+    ["Шашлык из свиной шейки", "320–330 г", 700], ["Шашлык из курицы", "320–330 г", 600], ["Люля-кебаб", "говядина и баранина, 200 г", 600],
+    ["Котлеты на мангале с картошкой", "400 г", 500], ["Котлеты на мангале с гречкой", "400 г", 500], ["Овощи на мангале", "250 г", 500], ["Грибы на мангале", "200 г", 500],
+  ],
+  "Азербайджанская кухня": [
+    ["Долма «Три сестры»", "баклажан, помидор, перец · 350 г", 600, 1], ["Долма из виноградных листьев", "350 г", 600], ["Буглама", "тушёное мясо с овощами", 500],
+    ["Чигиртма из курицы", "курица с помидорами и яйцами", 400, 1], ["Хашлама из баранины", "", 500, 1], ["Хашлама из говядины", "", 500, 1],
+    ["Омлет с помидорами по-бакински", "500 г", 600], ["Кюкю — омлет с зеленью", "500 г", 600],
+  ],
+  "Плов": [["Говурма плов", "казан на компанию", 3000, 1], ["Левенги плов", "казан на компанию", 3500, 1], ["Сабзи плов", "казан на компанию", 3000, 1]],
+  "Супы": [["Кюфта бозбаш", "600 мл", 500], ["Дюшбара", "", 450], ["Суп харчо от шеф-повара", "", 500], ["Борщ", "", 500], ["Суп из говядины", "600 мл", 500], ["Куриный суп", "", 350]],
+  "Гарниры и салаты": [
+    ["Картофель по-домашнему", "250 г", 400], ["Картофель фри", "250 г", 400], ["Овощная нарезка", "400 г", 500], ["Салат овощной", "350 г", 400],
+    ["Греческий салат", "", 500], ["Салат с хрустящими баклажанами", "", 500], ["Жареный судак с тушёными овощами", "250 г", 400],
+    ["Лаваш на садже", "", 100], ["Лепёшка из тандыра", "", 100],
+  ],
+  "Соусы": [["Наршараб", "гранатовый соус", 100], ["Аджика", "", 100], ["Чесночный соус", "", 100], ["Сырный соус", "", 100]],
+  "Чай и сладкое": [["Пахлава бакинская", "", 100], ["Шоколадная пахлава", "", 100], ["Эклеры", "домашние", 100], ["Чайник чая с чабрецом", "с лимоном", 300], ["Стакан чая", "", 100]],
+};
+const ALL = Object.values(MENU).flat().map((d, i) => ({ id: i, name: d[0], note: d[1], price: d[2], pre: !!d[3] }));
+let k = 0; const CATS = Object.fromEntries(Object.entries(MENU).map(([c, l]) => [c, l.map(() => ALL[k++])]));
+
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem("se-cart") || "{}"); } catch {}
+const save = () => { try { localStorage.setItem("se-cart", JSON.stringify(cart)); } catch {} };
+
+let cat = "Шашлык";
+$("#tabs").innerHTML = Object.keys(MENU).map((c) => `<button role="tab" class="${c === cat ? "on" : ""}">${c}</button>`).join("");
+$("#tabs").querySelectorAll("button").forEach((b) => b.onclick = () => { cat = b.textContent; $("#tabs").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderMenu(); });
+
+const ctrl = (d) => cart[d.id]
+  ? `<div class="qty"><button data-d="${d.id}" data-a="-1" aria-label="Меньше">−</button><span>${cart[d.id]}</span><button data-d="${d.id}" data-a="1" aria-label="Больше">+</button></div>`
+  : `<button class="add" data-d="${d.id}" data-a="1" aria-label="Добавить">+</button>`;
+function renderMenu() {
+  $("#menuList").innerHTML = CATS[cat].map((d, i) => `<div class="dish" style="animation-delay:${i * 35}ms"><div class="t"><b>${d.name}</b><small>${[d.note, d.pre ? '<span class="pre">по предзаказу</span>' : ""].filter(Boolean).join(" · ")}</small></div><span class="p">${rub(d.price)}</span><span class="c" data-c="${d.id}">${ctrl(d)}</span></div>`).join("");
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-a]");
+  if (!b) return;
+  const id = +b.dataset.d;
+  cart[id] = (cart[id] || 0) + +b.dataset.a;
+  if (cart[id] <= 0) delete cart[id];
+  save(); renderMenu(); renderCart();
+  if (+b.dataset.a > 0) { const c = $("#openCart"); c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); }
+});
+
+const WHEN = ["Через 30 мин", "Через 1 час", "Поем в кафе"];
+let when = WHEN[0];
+$("#when").innerHTML = WHEN.map((w) => `<button class="${w === when ? "on" : ""}">${w}</button>`).join("");
+$("#when").querySelectorAll("button").forEach((b) => b.onclick = () => { when = b.textContent; $("#when").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); renderCart(); });
+
+function renderCart() {
+  const ids = Object.keys(cart).map(Number);
+  const n = ids.reduce((s, i) => s + cart[i], 0);
+  const sum = ids.reduce((s, i) => s + cart[i] * ALL[i].price, 0);
+  $("#count").textContent = n;
+  $("#sum").textContent = $("#floatSum").textContent = rub(sum);
+  $("#floatCart").classList.toggle("show", n > 0 && !$("#drawer").classList.contains("open"));
+  $("#items").innerHTML = ids.length ? ids.map((i) => { const d = ALL[i]; return `<div class="it"><div class="t"><b>${d.name}</b><small>${rub(d.price)} × ${cart[i]}${d.pre ? " · по предзаказу" : ""}</small></div>${ctrl(d)}</div>`; }).join("")
+    : `<div class="empty">Пока пусто. Добавьте шашлык из меню 🔥</div>`;
+  const lines = ids.map((i) => `• ${ALL[i].name} × ${cart[i]} — ${rub(ALL[i].price * cart[i])}`);
+  const s = $("#sendOrder");
+  s.href = wa(`Здравствуйте! Хочу заказать:\n${lines.join("\n")}\nИтого: ${rub(sum)}\n${when === "Поем в кафе" ? "Поем у вас в кафе." : "Заберу " + when.toLowerCase() + "."}`);
+  s.style.opacity = ids.length ? "" : ".4"; s.style.pointerEvents = ids.length ? "" : "none";
+}
+const openCart = (on) => { $("#drawer").classList.toggle("open", on); $("#scrim").classList.toggle("on", on); renderCart(); };
+$("#openCart").onclick = $("#floatCart").onclick = () => openCart(true);
+$("#closeCart").onclick = $("#scrim").onclick = () => openCart(false);
+renderMenu(); renderCart();
+
+/* ---- banquet request ---- */
+const OCC = ["День рождения", "Свадьба", "Встреча друзей", "Корпоратив", "Юбилей", "Другое"];
+let occ = OCC[0];
+$("#occasion").innerHTML = OCC.map((o) => `<button class="${o === occ ? "on" : ""}">${o}</button>`).join("");
+const g = $("#guests"), dt = $("#date");
+const d0 = new Date(Date.now() + 7 * 864e5); dt.min = new Date().toISOString().slice(0, 10); dt.value = d0.toISOString().slice(0, 10);
+function bq() {
+  $("#gOut").textContent = g.value;
+  const day = dt.value ? new Date(dt.value).toLocaleDateString("ru-RU", { day: "numeric", month: "long" }) : "дата уточняется";
+  $("#bqSend").href = wa(`Здравствуйте! Хочу заказать банкет.\nПовод: ${occ}\nГостей: ${g.value}\nДата: ${day}\nПодскажите, пожалуйста, меню и стоимость.`);
+}
+$("#occasion").querySelectorAll("button").forEach((b) => b.onclick = () => { occ = b.textContent; $("#occasion").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); bq(); });
+g.oninput = dt.oninput = bq; bq();
+
+document.querySelectorAll("[data-wa]").forEach((a) => { a.href = wa(a.dataset.wa); a.target = "_blank"; a.rel = "noopener"; });
+
+/* ---- skewer: chunks cook as you turn it ---- */
+const RAWC = ["#c4515a", "#b8474f", "#cf5d62"], DONE = ["#7a3a1c", "#6a2f16", "#8a4524"], MID = ["#a8502d", "#9a4626", "#b55a33"];
+const chunks = [70, 120, 170, 220, 270, 320, 370, 420].map((x, i) => i % 3 === 2
+  ? `<ellipse class="chunk" cx="${x - 2}" cy="200" rx="18" ry="16" fill="#e8742a"/>`
+  : `<rect class="chunk" x="${x - 22}" y="178" width="44" height="44" rx="14" fill="${RAWC[i % 3]}"/>`).join("");
+$("#chunks").innerHTML = chunks;
+let turns = 0;
+$("#grill").onclick = () => {
+  turns = Math.min(turns + 1, 3);
+  const pal = turns === 1 ? MID : DONE;
+  document.querySelectorAll("#chunks rect").forEach((r, i) => r.setAttribute("fill", pal[i % 3]));
+  $("#skewer").animate([{ transform: "rotateX(0)" }, { transform: "rotateX(180deg)" }, { transform: "rotateX(360deg)" }], { duration: 600, easing: "ease-in-out" });
+  burst(40);
+  if (turns === 3) $(".grill-hint").textContent = "Готово! Осталось заказать 🔥";
+  else $(".grill-hint").textContent = turns === 1 ? "Ещё разок…" : "Почти готово…";
+};
+$("#coals").innerHTML = Array.from({ length: 22 }, (_, i) => `<circle class="coal" cx="${84 + (i % 11) * 31}" cy="${290 + Math.floor(i / 11) * 22}" r="${13 + (i * 7) % 6}" fill="url(#coalG)" style="animation-delay:${(i * 0.37) % 2.4}s"/>`).join("");
+
+/* ---- sparks ---- */
+const cv = $("#sparks"), cx = cv.getContext("2d");
+let W, H, P = [];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function size() { W = cv.width = cv.offsetWidth * devicePixelRatio; H = cv.height = cv.offsetHeight * devicePixelRatio; }
+size(); addEventListener("resize", size);
+function spawn(x, y) { P.push({ x: x ?? Math.random() * W, y: y ?? H + 10, vx: (Math.random() - .5) * 1.2, vy: -(1 + Math.random() * 2.6) * devicePixelRatio, life: 1, r: (1 + Math.random() * 2.2) * devicePixelRatio }); }
+function burst(n) {
+  const r = $("#grill").getBoundingClientRect(), h = cv.getBoundingClientRect();
+  for (let i = 0; i < n; i++) spawn((r.left - h.left + r.width * (.2 + Math.random() * .6)) * devicePixelRatio, (r.top - h.top + r.height * .62) * devicePixelRatio);
+}
+let vis = true; new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(cv);
+(function loop() {
+  requestAnimationFrame(loop);
+  if (!vis || reduce) return;
+  if (P.length < 140) spawn();
+  cx.clearRect(0, 0, W, H);
+  cx.globalCompositeOperation = "lighter";
+  P = P.filter((p) => (p.life -= .006) > 0);
+  for (const p of P) {
+    p.x += p.vx + Math.sin(p.y / 60) * .4; p.y += p.vy;
+    cx.fillStyle = `rgba(255,${120 + 100 * p.life | 0},40,${p.life})`;
+    cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 7); cx.fill();
+  }
+})();
+
+/* road ticker, nav, reveal */
+const ROAD = ["ШАШЛЫК НА УГЛЯХ", "🔥", "ПЛОВ В КАЗАНЕ", "🔥", "ДОЛМА", "🔥", "ПАХЛАВА", "🔥", "ХАЛЯЛЬ", "🔥", "ПО ДОРОГЕ В ДОМОДЕДОВО", "🔥"];
+$("#road").innerHTML = [...ROAD, ...ROAD].map((t) => `<span>${t}</span>`).join("");
+addEventListener("scroll", () => $("#nav").classList.toggle("solid", scrollY > 40), { passive: true });
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
