@@ -65,20 +65,51 @@
   .btn.wa { background: var(--wa); color: #06210f; }
   .btn.ghost { border: 1px solid var(--line); background: rgba(255, 255, 255, .04); }
 
-  /* the skewer */
-  .grill { position: relative; aspect-ratio: 1; max-width: 480px; width: 100%; margin-left: auto; }
-  .grill svg { width: 100%; height: 100%; overflow: visible; }
-  .skewer { transform-origin: 240px 200px; animation: turn 3.2s ease-in-out infinite; }
-  @keyframes turn { 50% { transform: translateY(-6px) rotate(-2deg); } }
-  .chunk { transition: fill 1.2s; }
-  .coal { animation: coal 2.4s ease-in-out infinite; }
-  @keyframes coal { 50% { opacity: .55; } }
-  .smoke { animation: smoke 5s linear infinite; opacity: 0; }
-  @keyframes smoke { 0% { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: .35; } 100% { opacity: 0; transform: translateY(-160px) scale(1.6); } }
-  .grill-hint { text-align: center; font-size: 13px; color: var(--muted); margin-top: -10px; }
+  /* photo hero: real photos from the Yandex card */
+  .bgfx { position: absolute; inset: 0; overflow: hidden; will-change: transform; }
+  .bgfx img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.8s ease; animation: kb 16s ease-in-out infinite alternate; will-change: transform, opacity; }
+  .bgfx img.on { opacity: 1; }
+  .bgfx img:nth-child(2) { animation-delay: -5s; } .bgfx img:nth-child(3) { animation-delay: -10s; }
+  @keyframes kb { from { transform: scale(1.06) translate3d(0, 0, 0); } to { transform: scale(1.2) translate3d(-2%, -3%, 0); } }
+  .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,12,9,.94) 0%, rgba(18,12,9,.72) 42%, rgba(18,12,9,.42) 100%), linear-gradient(180deg, rgba(18,12,9,.2) 60%, var(--bg)); }
+  @media (min-width: 901px) { .bgfx img { filter: blur(2px) saturate(1.15); } }
+  .hero h1, .hero p.lead, .hero .kicker { text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+  .hero h1 em { text-shadow: none; filter: drop-shadow(0 2px 14px rgba(0,0,0,.6)); }
+  .hero p.lead { color: #e3d2c2; }
+  .deckwrap { position: relative; width: 100%; max-width: 440px; margin-left: auto; }
+  .deck { position: relative; aspect-ratio: 4 / 5; width: 74%; margin: 0 auto 0 8%; perspective: 1200px; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+  .deck.grab { cursor: grabbing; }
+  .deck-in { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(var(--ty, -10deg)) rotateX(var(--tx, 4deg)); transition: transform .25s ease-out; will-change: transform; }
+  .dcard { position: absolute; inset: 0; margin: 0; border-radius: 22px; overflow: hidden; background: #2a1a10; box-shadow: 0 40px 60px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(255,214,170,.18) inset; transition: transform .75s cubic-bezier(.2,.8,.2,1), filter .75s, opacity .6s; will-change: transform; backface-visibility: hidden; }
+  .dcard img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .dcard .glare { position: absolute; inset: 0; background: radial-gradient(110% 60% at var(--gx, 30%) 0%, rgba(255,200,140,.35), transparent 60%); mix-blend-mode: soft-light; pointer-events: none; }
+  .dcard.drag { transition: none; }
+  .dcard.front { box-shadow: 0 50px 80px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(255,214,170,.45) inset, 0 0 60px -20px rgba(255,106,31,.55); }
+  .deck-cap { margin-top: 22px; text-align: center; font-weight: 800; font-size: 15px; min-height: 2.6em; }
+  .deck-cap small { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .deck-dots { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
+  .deck-dots i { width: 6px; height: 6px; border-radius: 9px; background: rgba(251,239,226,.25); transition: width .3s, background .3s; }
+  .deck-dots i.on { width: 20px; background: var(--fire); }
+  .photo-credit { position: absolute; right: 14px; bottom: 12px; font-size: 11px; color: rgba(251,239,226,.55); z-index: 2; }
+
+  /* hall: the real place */
+  .hall-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+  .hall-photo { margin: 0; border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: 0 50px 80px -40px rgba(0,0,0,.9); transform: perspective(1000px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)); transition: transform .2s; border: 1px solid var(--line); }
+  .hall-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); }
+  .hall-grid h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 900; margin: 10px 0 16px; }
+  .hall-grid p { color: var(--muted); }
+  .strip { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin-top: 34px; padding-bottom: 8px; scrollbar-width: none; }
+  .strip::-webkit-scrollbar { display: none; }
+  .strip figure { flex: 0 0 auto; margin: 0; width: min(62vw, 270px); scroll-snap-align: start; }
+  .strip img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px; display: block; border: 1px solid var(--line); box-shadow: 0 24px 40px -28px rgba(0,0,0,.9); }
+  .strip figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; font-weight: 700; }
+  .credit { font-size: 12px; color: var(--muted); margin-top: 10px; opacity: .8; }
+  .bq-photo { margin-top: 26px; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 10; border: 1px solid var(--line); }
+  .bq-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* road strip */
-  .road { background: var(--fire); color: #1a0d05; overflow: hidden; padding: 14px 0; transform: rotate(-1.5deg); margin: -20px -10px 0; position: relative; z-index: 2; }
+  .roadclip { overflow: hidden; padding: 16px 0; margin-top: -36px; position: relative; z-index: 2; }
+  .road { background: var(--fire); color: #1a0d05; overflow: hidden; padding: 14px 0; transform: rotate(-1.5deg); margin: 0 -2%; position: relative; }
   .road .track { display: flex; gap: 40px; width: max-content; animation: run 30s linear infinite; font-family: Unbounded, sans-serif; font-weight: 900; font-size: 20px; white-space: nowrap; }
   @keyframes run { to { transform: translateX(-50%); } }
 
@@ -125,7 +156,7 @@
   .banquet p { color: var(--muted); }
   .banquet .from { margin-top: 22px; font-family: Unbounded, sans-serif; font-size: 1.4rem; }
   .banquet .from b { color: var(--ember); }
-  .form { display: grid; gap: 18px; }
+  .form { display: grid; gap: 18px; align-content: start; }
   .form label { font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 8px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chips button { border: 1px solid var(--line); background: rgba(255, 255, 255, .03); border-radius: 12px; padding: 9px 13px; font-weight: 700; font-size: 14px; }
@@ -184,14 +215,20 @@
   @media (max-width: 900px) {
     nav ul { display: none; }
     .hero-grid, .chef, .banquet, .visit { grid-template-columns: 1fr; }
-    .grill { max-width: 340px; margin: 0 auto; order: -1; }
-    .hero { padding-top: 80px; }
+    .hero { padding-top: 46svh; align-items: end; padding-bottom: 50px; }
+    .shade { background: linear-gradient(180deg, rgba(18,12,9,.15) 0%, rgba(18,12,9,.25) 34%, rgba(18,12,9,.86) 52%, var(--bg) 78%); }
+    .bgfx { bottom: 30%; }
+    .deckwrap { margin: 18px auto 0; max-width: 380px; }
+    .deck { width: 72%; margin: 0 auto 0 10%; }
+    .hall-grid { grid-template-columns: 1fr; gap: 26px; }
     .menu, .revs { grid-template-columns: 1fr; }
     .demo { left: 12px; right: 12px; max-width: none; bottom: 8px; }
   }
+  @media (max-width: 380px) { .stat { padding: 18px 16px; } .stat b { font-size: 1.6rem; } .stats > * , .hero-grid > * { min-width: 0; } }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal { opacity: 1; transform: none; }
+    .dcard, .deck-in, .bgfx img { transition: none !important; animation: none !important; }
   }
 </style>
 </head>
@@ -202,6 +239,7 @@
     <a class="logo" href="#top">ШАШЛЫК <span>&</span> ЕДА</a>
     <ul>
       <li><a href="#menu">Меню</a></li>
+      <li><a href="#hall">Зал</a></li>
       <li><a href="#banquet">Банкеты</a></li>
       <li><a href="#chef">О нас</a></li>
       <li><a href="#visit">Как добраться</a></li>
@@ -211,6 +249,12 @@
 </nav>
 
 <header class="hero" id="top">
+  <div class="bgfx" id="bgfx" aria-hidden="true">
+    <img class="on" src="img/fire-skewers.webp" alt="" fetchpriority="high">
+    <img data-src="img/mangal.webp" alt="" style="object-position:50% 82%">
+    <img data-src="img/lula.webp" alt="">
+  </div>
+  <div class="shade" aria-hidden="true"></div>
   <canvas id="sparks" aria-hidden="true"></canvas>
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap hero-grid">
@@ -230,34 +274,16 @@
       </div>
     </div>
     <div>
-      <div class="grill" id="grill" title="Нажмите, чтобы перевернуть шампур">
-        <svg viewBox="0 0 480 440" aria-hidden="true">
-          <defs>
-            <radialGradient id="coalG"><stop offset="0" stop-color="#ffd27a"/><stop offset=".45" stop-color="#ff6a1f"/><stop offset="1" stop-color="#5a1206"/></radialGradient>
-            <linearGradient id="steel" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f1f1f1"/><stop offset="1" stop-color="#7d7d7d"/></linearGradient>
-            <linearGradient id="mangal" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a2a22"/><stop offset="1" stop-color="#140c08"/></linearGradient>
-          </defs>
-          <g class="smoke"><circle cx="200" cy="170" r="30" fill="#fff" opacity=".08"/></g>
-          <g class="smoke" style="animation-delay:1.6s"><circle cx="270" cy="170" r="36" fill="#fff" opacity=".07"/></g>
-          <g class="smoke" style="animation-delay:3.2s"><circle cx="235" cy="160" r="26" fill="#fff" opacity=".09"/></g>
-          <g class="skewer" id="skewer">
-            <rect x="30" y="196" width="420" height="8" rx="4" fill="url(#steel)"/>
-            <path d="M30 192 q-26 8 0 16 z" fill="#c9c9c9"/>
-            <circle cx="22" cy="200" r="10" fill="none" stroke="#c9c9c9" stroke-width="6"/>
-            <g id="chunks"></g>
-          </g>
-          <rect x="60" y="270" width="360" height="90" rx="12" fill="url(#mangal)" stroke="#4d372b"/>
-          <g id="coals"></g>
-          <rect x="60" y="270" width="360" height="12" rx="6" fill="#4d372b"/>
-          <rect x="90" y="360" width="10" height="70" fill="#2a1d16"/><rect x="380" y="360" width="10" height="70" fill="#2a1d16"/>
-        </svg>
+      <div class="deckwrap">
+        <div class="deck" id="deck" role="group" aria-label="Блюда кафе — листайте свайпом"><div class="deck-in" id="deckIn"></div></div>
+        <p class="deck-cap"><small>с мангала · фото с Яндекс Карт</small><span id="deckCap">люля-кебаб на лаваше</span></p>
+        <div class="deck-dots" id="deckDots" aria-hidden="true"></div>
       </div>
-      <p class="grill-hint">Нажмите на шампур, чтобы его перевернуть</p>
     </div>
   </div>
 </header>
 
-<div class="road" aria-hidden="true"><div class="track" id="road"></div></div>
+<div class="roadclip" aria-hidden="true"><div class="road"><div class="track" id="road"></div></div></div>
 
 <section id="chef">
   <div class="wrap chef">
@@ -288,6 +314,27 @@
   </div>
 </section>
 
+<section id="hall" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="hall-grid">
+      <figure class="hall-photo reveal"><img src="img/hall.webp" alt="Зал кафе «Шашлык и Еда»: деревянные столы и светлая стена с узором" loading="lazy"></figure>
+      <div class="reveal">
+        <p class="kicker">Кафе и банкетный зал</p>
+        <h2>Здесь <span class="fire">не только навынос</span></h2>
+        <p>Светлый зал по дороге в Домодедово: можно спокойно сесть, поесть горячее с мангала и отдохнуть с дороги. Этот же зал накрывают под праздники и банкеты.</p>
+        <p class="credit">Настоящие фото кафе · фото с Яндекс Карт</p>
+      </div>
+    </div>
+    <div class="strip" aria-label="Фото кафе">
+      <figure><img src="img/mangal-vitrine.webp" alt="Шампуры с мясом и овощами у мангала" loading="lazy"><figcaption>шампуры у мангала</figcaption></figure>
+      <figure><img src="img/hall-sun.webp" alt="Зал кафе днём" loading="lazy"><figcaption>зал днём</figcaption></figure>
+      <figure><img src="img/banquet-table.webp" alt="Накрытый стол в зале" loading="lazy"><figcaption>накрытый стол</figcaption></figure>
+      <figure><img src="img/table.webp" alt="Стол со скатертью с орнаментом" loading="lazy"><figcaption>столы в зале</figcaption></figure>
+      <figure><img src="img/entrance.webp" alt="Вход в кафе с гирляндой" loading="lazy"><figcaption>вход</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <section id="banquet">
   <div class="wrap">
     <div class="banquet reveal">
@@ -296,6 +343,7 @@
         <h2>Праздник <span class="fire">с шашлыком</span></h2>
         <p>Дни рождения, свадьбы, встречи друзей и корпоративы. Плов в казане, шашлык ассорти, долма и пахлава — меню подберём под ваш праздник.</p>
         <div class="from">Банкет от <b>5 000 ₽</b></div>
+        <figure class="bq-photo"><img src="img/banquet.webp" alt="Праздничный стол в банкетном зале — фото с Яндекс Карт" loading="lazy"></figure>
       </div>
       <div class="form">
         <div><label>Повод</label><div class="chips" id="occasion"></div></div>
@@ -444,33 +492,94 @@ g.oninput = dt.oninput = bq; bq();
 
 document.querySelectorAll("[data-wa]").forEach((a) => { a.href = wa(a.dataset.wa); a.target = "_blank"; a.rel = "noopener"; });
 
-/* ---- skewer: chunks cook as you turn it ---- */
-const RAWC = ["#c4515a", "#b8474f", "#cf5d62"], DONE = ["#7a3a1c", "#6a2f16", "#8a4524"], MID = ["#a8502d", "#9a4626", "#b55a33"];
-const chunks = [70, 120, 170, 220, 270, 320, 370, 420].map((x, i) => i % 3 === 2
-  ? `<ellipse class="chunk" cx="${x - 2}" cy="200" rx="18" ry="16" fill="#e8742a"/>`
-  : `<rect class="chunk" x="${x - 22}" y="178" width="44" height="44" rx="14" fill="${RAWC[i % 3]}"/>`).join("");
-$("#chunks").innerHTML = chunks;
-let turns = 0;
-$("#grill").onclick = () => {
-  turns = Math.min(turns + 1, 3);
-  const pal = turns === 1 ? MID : DONE;
-  document.querySelectorAll("#chunks rect").forEach((r, i) => r.setAttribute("fill", pal[i % 3]));
-  $("#skewer").animate([{ transform: "rotateX(0)" }, { transform: "rotateX(180deg)" }, { transform: "rotateX(360deg)" }], { duration: 600, easing: "ease-in-out" });
-  burst(40);
-  if (turns === 3) $(".grill-hint").textContent = "Готово! Осталось заказать 🔥";
-  else $(".grill-hint").textContent = turns === 1 ? "Ещё разок…" : "Почти готово…";
-};
-$("#coals").innerHTML = Array.from({ length: 60 }, (_, i) => { const r = (n) => ((Math.sin(i * 12.9898 + n) * 43758.5453) % 1 + 1) % 1; const hot = r(3) > .35; return `<circle class="${hot ? "coal" : ""}" cx="${78 + r(1) * 324}" cy="${284 + r(2) * 60}" r="${7 + r(4) * 11}" fill="${hot ? "url(#coalG)" : "#2b1a12"}" style="animation-delay:${(r(5) * 2.4).toFixed(2)}s"/>`; }).join("");
+/* ---- photo hero: crossfading mangal background + 3D deck of real dishes ---- */
+const reduceM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const bgImgs = [...document.querySelectorAll("#bgfx img")];
+let bgI = 0, heroVis = true;
+addEventListener("load", () => bgImgs.forEach((im) => { if (im.dataset.src) im.src = im.dataset.src; }));
+if (!reduceM) setInterval(() => {
+  const nx = bgImgs[(bgI + 1) % bgImgs.length];
+  if (!heroVis || document.hidden || !nx.src || !nx.complete) return;
+  bgImgs[bgI].classList.remove("on"); bgI = (bgI + 1) % bgImgs.length; bgImgs[bgI].classList.add("on");
+}, 6500);
+const DISHES = [
+  ["lula-plate", "люля-кебаб на лаваше"], ["lamb-chops", "рёбрышки ягнёнка с соусом"], ["chicken-plate", "курица с мангала"],
+  ["ribs", "рёбрышки с красным луком"], ["assorti", "ассорти с овощами гриль"],
+];
+const deck = $("#deck"), deckIn = $("#deckIn");
+const cards = DISHES.map((d, i) => {
+  const f = document.createElement("figure"); f.className = "dcard";
+  f.innerHTML = `<img src="img/${d[0]}.webp" alt="${d[1]} — фото кафе с Яндекс Карт" draggable="false" ${i > 1 ? 'loading="lazy" ' : ""}decoding="async"><span class="glare"></span>`;
+  deckIn.appendChild(f); return f;
+});
+$("#deckDots").innerHTML = DISHES.map(() => "<i></i>").join("");
+const dots = [...document.querySelectorAll("#deckDots i")];
+let order = cards.map((_, i) => i), spread = 0, dragX = 0, dragging = false, startX = 0, lastMove = 0;
+function place() {
+  const sp = 1 + spread * 1.1;
+  order.forEach((ci, k) => {
+    const c = cards[ci];
+    c.style.transform = (k === 0 && dragging)
+      ? `translate3d(${dragX}px, 0, 30px) rotateZ(${dragX * .04}deg) rotateY(${dragX * .05}deg)`
+      : `translate3d(${k * 30 * sp}px, ${-k * 16 * sp}px, ${-k * 80}px) rotateZ(${k * 3.5 * sp}deg)`;
+    c.style.zIndex = 10 - k;
+    c.style.opacity = k > 3 ? 0 : 1;
+    c.style.filter = `brightness(${(1 - k * .17).toFixed(2)}) saturate(${(1 - k * .12).toFixed(2)})`;
+    c.style.setProperty("--gx", (30 + k * 12) + "%");
+    c.classList.toggle("front", k === 0);
+  });
+  const f = order[0];
+  $("#deckCap").textContent = DISHES[f][1];
+  dots.forEach((d, i) => d.classList.toggle("on", i === f));
+}
+function advance(dir = 1) {
+  const front = cards[order[0]];
+  front.style.transform = `translate3d(${dir * -130}%, -6%, 60px) rotateZ(${dir * -16}deg) rotateY(${dir * 28}deg)`;
+  front.style.zIndex = 20;
+  setTimeout(() => { order.push(order.shift()); place(); }, 260);
+}
+deck.addEventListener("pointerdown", (e) => { dragging = true; startX = e.clientX; dragX = 0; deck.setPointerCapture(e.pointerId); deck.classList.add("grab"); cards[order[0]].classList.add("drag"); });
+deck.addEventListener("pointermove", (e) => {
+  if (dragging) { dragX = e.clientX - startX; place(); return; }
+  if (reduceM || e.pointerType !== "mouse") return;
+  const r = deck.getBoundingClientRect();
+  deckIn.style.setProperty("--ty", (-10 + ((e.clientX - r.left) / r.width - .5) * 18) + "deg");
+  deckIn.style.setProperty("--tx", (4 + (.5 - (e.clientY - r.top) / r.height) * 12) + "deg");
+});
+deck.addEventListener("pointerleave", () => { deckIn.style.removeProperty("--ty"); deckIn.style.removeProperty("--tx"); });
+function endDrag() {
+  if (!dragging) return;
+  dragging = false; deck.classList.remove("grab"); cards[order[0]].classList.remove("drag");
+  lastMove = Date.now();
+  if (Math.abs(dragX) > 50) advance(dragX < 0 ? 1 : -1);
+  else if (Math.abs(dragX) < 6) { advance(1); burst(30); }
+  else place();
+}
+deck.addEventListener("pointerup", endDrag); deck.addEventListener("pointercancel", endDrag);
+deck.tabIndex = 0;
+deck.addEventListener("keydown", (e) => { if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") { e.preventDefault(); lastMove = Date.now(); advance(1); } });
+place();
+setInterval(() => { if (!reduceM && heroVis && !document.hidden && !dragging && Date.now() - lastMove > 6000) advance(1); }, 3600);
+/* scroll: the mangal photo zooms and drifts, the deck fans out */
+const bgfx = $("#bgfx"), heroEl = $(".hero");
+function heroScroll() {
+  const p = Math.min(1, Math.max(0, scrollY / heroEl.offsetHeight));
+  if (!reduceM) bgfx.style.transform = `translate3d(0, ${p * 90}px, 0) scale(${1 + p * .12})`;
+  const ns = reduceM ? 0 : Math.min(1, p * 1.6);
+  if (Math.abs(ns - spread) > .01) { spread = ns; if (!dragging) place(); }
+}
+addEventListener("scroll", heroScroll, { passive: true }); heroScroll();
+new IntersectionObserver(([e]) => (heroVis = e.isIntersecting)).observe(heroEl);
 
 /* ---- sparks ---- */
 const cv = $("#sparks"), cx = cv.getContext("2d");
 let W, H, P = [];
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduce = reduceM;
 function size() { W = cv.width = cv.offsetWidth * devicePixelRatio; H = cv.height = cv.offsetHeight * devicePixelRatio; }
 size(); addEventListener("resize", size);
 function spawn(x, y) { P.push({ x: x ?? Math.random() * W, y: y ?? H + 10, vx: (Math.random() - .5) * 1.2, vy: -(1 + Math.random() * 2.6) * devicePixelRatio, life: 1, r: (1 + Math.random() * 2.2) * devicePixelRatio }); }
 function burst(n) {
-  const r = $("#grill").getBoundingClientRect(), h = cv.getBoundingClientRect();
+  const r = $("#deck").getBoundingClientRect(), h = cv.getBoundingClientRect();
   for (let i = 0; i < n; i++) spawn((r.left - h.left + r.width * (.2 + Math.random() * .6)) * devicePixelRatio, (r.top - h.top + r.height * .62) * devicePixelRatio);
 }
 let vis = true; new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(cv);
@@ -494,6 +603,7 @@ $("#road").innerHTML = [...ROAD, ...ROAD].map((t) => `<span>${t}</span>`).join("
 addEventListener("scroll", () => $("#nav").classList.toggle("solid", scrollY > 40), { passive: true });
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+(function () { const f = $(".hall-photo"); if (!f || reduceM) return; f.addEventListener("pointermove", (e) => { const r = f.getBoundingClientRect(); f.style.setProperty("--ry", ((e.clientX - r.left) / r.width - .5) * 10 + "deg"); f.style.setProperty("--rx", (.5 - (e.clientY - r.top) / r.height) * 8 + "deg"); }); f.addEventListener("pointerleave", () => { f.style.setProperty("--ry", "0deg"); f.style.setProperty("--rx", "0deg"); }); })();
 </script>
 </body>
 </html>
